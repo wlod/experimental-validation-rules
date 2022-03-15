@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>experimental-validation-rules</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/index.css">
+
+    <script type="text/javascript" src="js/prototype-js-core.js" defer></script>
+    <script type="text/javascript" src="js/example-response.js" defer></script>
+    <script type="text/javascript" src="js/utils.js" defer></script>
+    <script type="text/javascript" src="js/items-view.js" defer></script>
+    <script type="text/javascript" src="js/main.js" defer></script>
+
+    <script type="text/javascript">
+	/**/
+    </script>
+
+    <style>
+    /**/
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <div id="header">
+        <div class="header-box">
+            <strong>Sample API response</strong>
+            <div class="header-sample-response">
+                <textarea id="sample-response"></textarea>
+                <textarea id="sample-response-backup"></textarea>
+            </div>
+            <button onClick="receiveFromApi('sample-response')" data-method="send">RECEIVE FROM "API"</button>
+            <button class="button-right" onClick="prettyJson('sample-response','sample-response-backup')">Format</button>
+            <button class="button-right" onClick="undoPrettyJson('sample-response-backup', 'sample-response')">Undo</button>
+        </div>
+        <div class="header-box-debug">
+            <strong>Debug console</strong>
+            <div>
+                <textarea id="debug-console" disabled></textarea>
+            </div>
+            <button class="button-right" style="float: right;" onClick="clearElementValue('debug-console')">Clear</button>
+        </div>
+
+    </div>
+    <div id="left">
+        <div class="method-box">
+            <ul>
+                <li class="title">API RULES:</li>
+                <li>none</li>
+            </ul>
+
+        </div>
+
+        <div class="method-box">
+            <ul>
+                <li class="title">USED RULES:</li>
+                <li>none</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="right">
+        <strong>ITEMS VIEW:</strong>
+        <div id="items-view">
+            test
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>
