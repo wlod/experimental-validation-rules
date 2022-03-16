@@ -91,7 +91,7 @@ class CheckboxView {
     hasRule(item, rule) {
         let hasRule = false;
         item.validationsRules.forEach(itemRule => {
-            if (itemRule.type === rule) {
+            if (rule === itemRule.type) {
                 hasRule = true;
                 return hasRule;
             }
@@ -99,14 +99,11 @@ class CheckboxView {
         return hasRule;
     }
 
-    // TODO use hasRule after remove item
     _disableByRequiredItem() {
-        this.item.validationsRules.forEach(rule => {
-            if (RULE_TYPE_REQUIRED === rule.type) {
-                 this.item.isDisabled = "disabled";
-                 this.item.isChecked = "checked";
-            }
-        });
+        if(this.hasRule(this.item, RULE_TYPE_REQUIRED)) {
+            this.item.isDisabled = "disabled";
+            this.item.isChecked = "checked";
+        }
     }
 
     _disableByMaxSelectedItems() {
