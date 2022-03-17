@@ -47,7 +47,7 @@ class ItemsView {
 
     removeDisableFlag(items) {
         this.checkboxArray.forEach(checkbox => {
-            if(items.indexOf(checkbox.item.id) !== -1 && !checkbox.hasRule(checkbox.item, RULE_TYPE_REQUIRED)) {
+            if(items.indexOf(checkbox.item.id) !== -1 && !checkbox.hasRule(RULE_TYPE_REQUIRED)) {
                 checkbox.removeDisableFlag();
             }
         });
@@ -87,10 +87,9 @@ class CheckboxView {
         this.item.isDisabled = "";
     }
 
-    // TODO remove item from _isChecked
-    hasRule(item, rule) {
+    hasRule(rule) {
         let hasRule = false;
-        item.validationsRules.forEach(itemRule => {
+        this.item.validationsRules.forEach(itemRule => {
             if (rule === itemRule.type) {
                 hasRule = true;
                 return hasRule;
@@ -100,7 +99,7 @@ class CheckboxView {
     }
 
     _disableByRequiredItem() {
-        if(this.hasRule(this.item, RULE_TYPE_REQUIRED)) {
+        if(this.hasRule(RULE_TYPE_REQUIRED)) {
             this.item.isDisabled = "disabled";
             this.item.isChecked = "checked";
         }
@@ -116,7 +115,7 @@ class CheckboxView {
         this.item.validationsRules.forEach(rule => {
             if (RULE_TYPE_REQUIRES === rule.type) {
                 this.items.forEach(item => {
-                    if(rule.items.indexOf(item.id) !== -1 && (this._isChecked(item) !== "checked")) {
+                    if(rule.items.indexOf(item.id) !== -1 && (item.isChecked !== "checked")) {
                         this.item.isDisabled = "disabled";
                         this.item.isChecked = "";
                         return;
@@ -130,7 +129,7 @@ class CheckboxView {
         this.items.forEach(item => {
             item.validationsRules.forEach(rule => {
                 if (RULE_TYPE_EXCLUDES === rule.type) {
-                    if(rule.items.indexOf(this.item.id) !== -1 && (this._isChecked(item) === "checked")) {
+                    if(rule.items.indexOf(this.item.id) !== -1 && (item.isChecked === "checked")) {
                         this.item.isDisabled = "disabled";
                         this.item.isChecked = "";
                         return;
@@ -140,13 +139,12 @@ class CheckboxView {
        });
     }
 
-    // TODO item is not necessary
-    _isChecked(item) {
-        return (this.hasRule(item, RULE_TYPE_REQUIRED) || item.isChecked) ? "checked" : "";
+    _isChecked() {
+        return (this.hasRule(RULE_TYPE_REQUIRED) || this.item.isChecked === "checked") ? "checked" : "";
     }
 
     _excludeItems() {
-        if (this._isChecked(this.item) !== "checked") {
+        if (this._isChecked() !== "checked") {
             return;
         }
         this.item.validationsRules.forEach(rule => {
@@ -162,10 +160,10 @@ class CheckboxView {
     }
 
     _enable() {
-        if (this.itemsValidationRules.isLastSelectedItem(this.item) && !this.hasRule(this.item, RULE_TYPE_REQUIRED)) {
+        if (this.itemsValidationRules.isLastSelectedItem(this.item) && !this.hasRule(RULE_TYPE_REQUIRED)) {
             this.item.isDisabled = "";
         }
-        if (this._isChecked(this.item)) {
+        if (this._isChecked() === "checked") {
             this.item.validationsRules.forEach(rule => {
                 if (RULE_TYPE_REQUIRES === rule.type) {
                     // TODO spaghetti - access to itemsView
