@@ -106,7 +106,7 @@ class CheckboxView {
     }
 
     _disableByMaxSelectedItems() {
-        if (this.itemsValidationRules.maxSelectedItems < 1) {
+        if (this.itemsValidationRules.maxSelectedItems < 1 && this.item.isChecked !== "checked") {
             this.item.isDisabled = "disabled";
         }
     }
@@ -160,9 +160,6 @@ class CheckboxView {
     }
 
     _enable() {
-        if (this.itemsValidationRules.isLastSelectedItem(this.item) && !this.hasRule(RULE_TYPE_REQUIRED)) {
-            this.item.isDisabled = "";
-        }
         if (this._isChecked() === "checked") {
             this.item.validationsRules.forEach(rule => {
                 if (RULE_TYPE_REQUIRES === rule.type) {
@@ -195,14 +192,10 @@ class ItemsValidationRules {
         this.selectedItems = this.selectedItems.splice(0,this.initialMaxSelectedItems);
         this.maxSelectedItems = this.initialMaxSelectedItems;
         checkboxArray.forEach(checkbox => {
-            if(checkbox.item.isChecked) {
+            if(checkbox.item.isChecked === "checked") {
                 this._decreaseMaxSelectedItemsByItem(checkbox.item);
             }
         });
-    }
-
-    isLastSelectedItem(item) {
-        return this.lastSelectedItem && this.lastSelectedItem.id === item.id ? true : false;
     }
 
     _decreaseMaxSelectedItemsByItem(item) {

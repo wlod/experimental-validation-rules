@@ -2,7 +2,7 @@
 
 const EXAMPLE_RESPONSE = `
 {
-      "maxSelectedItems": 4,
+      "maxSelectedItems": 5,
       "items": [
           {
               "id": 1,
